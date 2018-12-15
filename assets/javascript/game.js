@@ -1,4 +1,4 @@
-/*  
+/*
     Word Guess Game
     Author: Dave Paquette
     Date: Dec. 2018
@@ -22,17 +22,18 @@
 // Memory objects
 const lives = 12;
 var game = {
-    word: [], // exploded word from wordBank goes here
-    score: [], // len(score) = len(word), either 0 or 1 depending on whether or not the letter has been found
-    tries: [], // tried letters
-    remaining: lives, // guesses remaining. g/o when remaining == 0
+    word: [],                   // exploded word from wordBank goes here
+    score: [],                  // len(score) = len(word), either 0 or 1 depending on whether or not the letter has been found
+    tries: [],                  // tried letters
+    remaining: lives,           // guesses remaining. g/o when remaining == 0
+    display: [],                // display variable
 }
 
 
 
 /*
     Main
-    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾  
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 */
 function main(key) {
 
@@ -143,6 +144,7 @@ function main(key) {
         game.remaining = lives;
         for (let i in game.word) {
             game.score.push(0);
+            game.display.push('_');
         }
     }
 
@@ -175,29 +177,31 @@ function main(key) {
             for (let i in game.word) {
                 if (k == game.word[i]) {
                     game.score[i] = 1;
+                    game.display[i] = game.word[i];
                 }
             }
         }
     }
 
-    //  Body
-    if (game.remaining === lives) { // if true a new game is required
+    /*  Body
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
+    if (game.remaining === lives) {                         // if true a new game is required
         reset();
     }
     k = keyPress(key);
-    if (game.tries.indexOf(k) !== -1) { // duplicate keypress -> exit main
+    if (game.tries.indexOf(k) !== -1) {                     // duplicate keypress -> exit main
         return;
     }
     updateGame();
     gs = gameState();
-    if (gs === 0) { // game not won or lost -> exit main
+    if (gs === 0) {                                         // game not won or lost -> exit main
         return
-    } else if (gs < 0) { // defeat
+    } else if (gs < 0) {                                    // defeat
         // sadness
-    } else { // victory
+    } else {                                                // victory
         // celebration
     }
-    game.remaining = lives; // game's over & this causes reset on next go-around
+    game.remaining = lives;                                 // game's over & this causes reset on next go-around
 }
 
 // Call main on keypress

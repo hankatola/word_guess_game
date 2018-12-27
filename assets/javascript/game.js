@@ -1,3 +1,4 @@
+$(document).ready(function() {
 
 /*
     Word Guess Game
@@ -151,6 +152,12 @@ function keyPress(key) {
     main(k)
 }
 
+function display() {
+    $('#display').text(game.display)
+    $('#remaining').text(game.remaining)
+    $('#guesses').text(game.tries)
+}
+
 /*
     Main
     ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -173,6 +180,7 @@ function main(key) {
         prepareWord()
     }
     console.log(game)
+    display()
 }
 
 // Call main to prepare memory
@@ -181,3 +189,9 @@ main()
 console.log(game)
 // Call main on keypress
 $(document).keyup(keyPress)
+$('#reset').on('click',function() {
+    game.remaining=0
+    main()
+})
+
+})

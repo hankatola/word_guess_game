@@ -121,9 +121,10 @@ function updateGame(key) {
         game.tries.push(key)
         game.tries.sort()
     } else {
-        alert('You already tried ' + key + '!')
+        alert('You already tried \'' + key + '\'!')
         return
     }
+    // create score array
     if (game.word.indexOf(key) >= 0) {
         for (let i in game.word) {
             if (key == game.word[i]) {
@@ -133,6 +134,7 @@ function updateGame(key) {
     } else {
         game.remaining -= 1
     }
+    // create new display string
     game.display = ''
     for (let i in game.score) {
         if (game.score[i] == 1) {
@@ -191,25 +193,25 @@ function main(key) {
     gs = gameState()
     if (gs === 1) {                 // You won
         wins += 1
-        display()
+        display()                   // display last letter
         setTimeout(function(){
             alert('You won!')
         },50)
         prepareWord()
         setTimeout(function() {
-            display()
+            display()               // clear display after alert button
         },100)
     }
     if (gs === -1) {                // You lost
         let y = game.x
         losses += 1
-        display()
+        display()                   // display entered key & 0 remaining tries
         setTimeout(function(){
             alert('You lost! The word was ' + y)
         },50)
         prepareWord()
         setTimeout(function() {
-            display()
+            display()               // clears display & resets for new game after alert button pressed
         },100)
     }
 }
@@ -217,7 +219,7 @@ function main(key) {
 // Call main to prepare memory
 main()
 
-// Call main on keypress
+// Call keypress on keypress, keypress calls main
 $(document).keyup(keyPress)
 $('#reset').on('click',function() {
     game.remaining=0

@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 // Memory objects
 const lives = 12
+var wins = 0, losses = 0, ratio = 1
 var game = {
     word: [],                   // exploded word from wordBank goes here
     score: [],                  // len(score) = len(word), either 0 or 1 depending on whether or not the letter has been found
@@ -95,12 +96,13 @@ function prepareWord() {
     game.word = wordBank[randInt()].split('')
     game.tries = []
     game.score = []
-    game.display = []
+    game.display = ''
     game.remaining = lives;
     for (let i in game.word) {
         game.score.push(0)
-        game.display.push('_')
+        game.display +=  '- '
     }
+    game.display = game.display.substring(0,game.display.length - 1)
 }
 
 function sum() {
@@ -116,18 +118,27 @@ function updateGame(key) {
     if (game.tries.indexOf(key) < 0) {
         game.tries.push(key)
     } else {
+        alert('You already tried ' + key + '!')
         return
     }
     if (game.word.indexOf(key) >= 0) {
         for (let i in game.word) {
             if (key == game.word[i]) {
                 game.score[i] = 1;
-                game.display[i] = game.word[i];
             }
         }
     } else {
         game.remaining -= 1
     }
+    game.display = ''
+    for (let i in game.score) {
+        if (game.score[i] == 1) {
+            game.display += game.word[i] + ' '
+        } else {
+            game.display += '- '
+        }
+    }
+    game.display = game.display.substring(0,game.display.length-1)
 }
 
 function gameState() {
@@ -156,6 +167,8 @@ function display() {
     $('#display').text(game.display)
     $('#remaining').text(game.remaining)
     $('#guesses').text(game.tries)
+    $('#wins').text('Wins: ' + wins)
+    $('#losses').text('Losses: ' + losses)
 }
 
 /*
@@ -170,23 +183,36 @@ function main(key) {
     if (key != undefined) {
         updateGame(key)
     }
-    gs = gameState()
-    if (gs === 1) {
-        console.log('victory')
-        prepareWord()
-    }
-    if (gs === -1) {
-        console.log('You lose')
-        prepareWord()
-    }
-    console.log(game)
+
     display()
+    gs = gameState()
+    if (gs === 1) {                 // You won
+        wins += 1
+        display()
+        setTimeout(function(){
+            alert('You won!')
+        },50)
+        prepareWord()
+        setTimeout(function() {
+            display()
+        },100)
+    }
+    if (gs === -1) {                // You lost
+        losses += 1
+        display()
+        setTimeout(function(){
+            alert('You lost!')
+        },50)
+        prepareWord()
+        setTimeout(function() {
+            display()
+        },100)
+    }
 }
 
 // Call main to prepare memory
 main()
 
-console.log(game)
 // Call main on keypress
 $(document).keyup(keyPress)
 $('#reset').on('click',function() {

@@ -29,7 +29,8 @@ var game = {
     score: [],                  // len(score) = len(word), either 0 or 1 depending on whether or not the letter has been found
     tries: [],                  // tried letters
     remaining: lives,           // guesses remaining. g/o when remaining == 0
-    display: [],                // display variable
+    display: '',                // display variable
+    x: '',
 }
 var alphabet = 'abcdefghijklmnopqrstuvwxyz';
 var wordBank = [
@@ -93,7 +94,8 @@ function randInt() {
 }
 
 function prepareWord() {
-    game.word = wordBank[randInt()].split('')
+    game.x = wordBank[randInt()]
+    game.word = game.x.split('')
     game.tries = []
     game.score = []
     game.display = ''
@@ -117,6 +119,7 @@ function updateGame(key) {
     // record k, update remaining guesses & score if k in word
     if (game.tries.indexOf(key) < 0) {
         game.tries.push(key)
+        game.tries.sort()
     } else {
         alert('You already tried ' + key + '!')
         return
@@ -164,11 +167,11 @@ function keyPress(key) {
 }
 
 function display() {
-    $('#display').text(game.display)
-    $('#remaining').text(game.remaining)
+    $('#display').text('Current Word:  ' + game.display)
+    $('#remaining').text('Tries remaining: ' + game.remaining)
     $('#guesses').text(game.tries)
     $('#wins').text('Wins: ' + wins)
-    $('#losses').text('Losses: ' + losses)
+    $('#losses').text('Loss: ' + losses)
 }
 
 /*
@@ -198,10 +201,11 @@ function main(key) {
         },100)
     }
     if (gs === -1) {                // You lost
+        let y = game.x
         losses += 1
         display()
         setTimeout(function(){
-            alert('You lost!')
+            alert('You lost! The word was ' + y)
         },50)
         prepareWord()
         setTimeout(function() {

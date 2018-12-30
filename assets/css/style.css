@@ -1,5 +1,50 @@
+
 body {
     background: black;
     color: white;
     margin: auto;
+}
+
+img {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+}
+
+main {
+    z-index: 2;
+    padding-top: 275px;
+}
+
+#wins {
+    padding-top: 25px;
+}
+
+.row {
+    width: auto;
+    margin-left: -75px;
+}
+
+.btn {
+    margin-top: 50px;
+}
+.container {
+    width: 100%;
+    font-size: 30px;
+}
+
+.column {
+    float: left;
+    margin: auto;
+    padding: none;
+}
+
+#display {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.text-muted {
+    padding-top: 50px;
+    font-size: 15px;
 }

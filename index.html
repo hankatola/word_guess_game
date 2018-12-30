@@ -16,23 +16,23 @@
 <body class='container'>
     <main>
         <img src="assets/images/2-WordGuess.jpg">
-        <div><h1>Press any key to guess a letter</h1></div>
-        <h3>
-        <div id='wins'></div>
-        <div id='losses'></div>
-        <div><h3>Current Word</h3></div>
-        <div id='display'></div>
-        <div><h3>Number of guesses remaining</h3></div>
-        <div id='remaining'></div>
-        <div><h3>Letters already guessed</h3></div>
-        <div id='guesses'></div>
-        </h3>
-        <button type="button" class="btn btn-secondary" id='reset'>New Word</button>
+        <div class='mx-auto text-center' id='display'></div>
+        <div class='row'>
+            <div class='column float-left'>
+                <div id='wins'></div>
+                <div id='losses'></div>
+            </div>
+            <div class='column float-right'>
+                <div id='remaining'></div>
+                <div>Letters Tried</div>
+                <div id='guesses'></div>
+            </div>
+        </div>
+        <div class='mx-auto text-center'>
+            <button type="button" class="btn btn-secondary" id='reset'>I give up</button>
+            <div class='text-muted'>Press any key to play</div>
+        </div>
     </main>
-
-    <footer>
-
-    </footer>
 </body>
 
 </html>
